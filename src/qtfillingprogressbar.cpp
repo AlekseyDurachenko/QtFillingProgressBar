@@ -25,6 +25,62 @@ QtFillingProgressBar::QtFillingProgressBar(QWidget *parent) : QWidget(parent)
     m_progressColor = Qt::darkBlue;
     m_backgroundColor = Qt::gray;
     m_percentColor = Qt::white;
+    m_format = "%p%";
+    m_precision = 1;
+}
+
+void QtFillingProgressBar::setPercentColor(const QColor &percentColor)
+{
+    if (m_percentColor != percentColor)
+    {
+        m_percentColor = percentColor;
+        emit update();
+    }
+}
+
+void QtFillingProgressBar::setPercentFont(const QFont &percentFont)
+{
+    if (m_percentFont != percentFont)
+    {
+        m_percentFont = percentFont;
+        emit update();
+    }
+}
+
+void QtFillingProgressBar::setBackgroundColor(const QColor &backgroundColor)
+{
+    if(m_backgroundColor != backgroundColor)
+    {
+        m_backgroundColor = backgroundColor;
+        emit update();
+    }
+}
+
+void QtFillingProgressBar::setProgressColor(const QColor &progressColor)
+{
+    if (m_progressColor != progressColor)
+    {
+        m_progressColor = progressColor;
+        emit update();
+    }
+}
+
+void QtFillingProgressBar::setFormat(const QString &format)
+{
+    if (m_format != format)
+    {
+        m_format = format;
+        emit update();
+    }
+}
+
+void QtFillingProgressBar::setPrecision(int precision)
+{
+    if (m_precision != precision)
+    {
+        m_precision = precision;
+        emit update();
+    }
 }
 
 void QtFillingProgressBar::paintEvent(QPaintEvent *)
@@ -32,8 +88,9 @@ void QtFillingProgressBar::paintEvent(QPaintEvent *)
     if (height() > 0 && width() > 0)
     {
         int w = qRound(width()*(m_value-m_min)/(m_max-m_min));
-        QString percentText = QString::number(
-                100*(m_value-m_min)/(m_max-m_min), 'f', 1) + QString("%");
+        double percent = 100*(m_value-m_min)/(m_max-m_min);
+        QString percentText = m_format;
+        percentText.replace("%p", QString::number(percent, 'f', m_precision));
 
         QPainter painter(this);
         painter.setPen(m_progressColor);
@@ -51,37 +108,32 @@ void QtFillingProgressBar::paintEvent(QPaintEvent *)
 void QtFillingProgressBar::resizeEvent(QResizeEvent *)
 {
     if (m_percentFont.pixelSize() != height())
-    {
         m_percentFont.setPixelSize(height());
-    }
 }
 
 void QtFillingProgressBar::setRange(double min, double max)
 {
     m_min = min;
     m_max = max;
+
     update();
 }
 
 void QtFillingProgressBar::setValue(double value)
 {
     if (value > m_max)
-    {
         m_value = m_max;
-    }
     else if (m_value < m_min)
-    {
         m_value = m_min;
-    }
     else
-    {
         m_value = value;
-    }
+
     update();
 }
 
 void QtFillingProgressBar::reset()
 {
     m_value = m_min;
+
     update();
 }
