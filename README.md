@@ -11,7 +11,7 @@ Website: https://github.com/AlekseyDurachenko/QtFillingProgressBar
 Copyright (c) 2013-2014 Aleksey Durachenko (unless explicitly stated otherwise).
 
 <p align=center>
-<img src=https://raw.githubusercontent.com/AlekseyDurachenko/QtFillingProgressBar/master/doc/examples/statusbar/img/screenshot001.png>
+<img src=doc/examples/statusbar/img/screenshot001.png>
 </p>
 
 Usage
@@ -38,4 +38,4 @@ statusBar()->addWidget(m_progressBar, 1);
 License
 -------
 
-<a href="https://github.com/AlekseyDurachenko/QtFillingProgressBar/blob/master/LICENSE">LGPLv2.1+</a>.
+<a href="LICENSE">LGPLv2.1+</a>.
